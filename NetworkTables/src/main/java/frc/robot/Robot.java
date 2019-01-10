@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.*;
+import frc.robot.Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,18 +20,17 @@ import edu.wpi.first.networktables.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  public Vision vision = new Vision();
+
+  public double[] table = new double[5];
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
+    
   }
 
   /**
@@ -44,6 +43,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
   }
 
   /**
@@ -59,9 +59,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    
   }
 
   /**
@@ -69,15 +67,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    
   }
 
   /**
@@ -85,7 +75,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
+    table=vision.getTable();
+    SmartDashboard.putNumber("tv", table[0]);
+    SmartDashboard.putNumber("tx", table[1]);
+    SmartDashboard.putNumber("ty", table[2]);
+    SmartDashboard.putNumber("ta", table[3]);
+    SmartDashboard.putNumber("tl", table[4]);
   }
 
   /**
