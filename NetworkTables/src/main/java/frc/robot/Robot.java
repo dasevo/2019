@@ -21,8 +21,6 @@ import frc.robot.Vision;
  */
 public class Robot extends TimedRobot {
 
-  //is this pulling up on Git?
-
   public Vision vision = new Vision();
 
   public double[] table = new double[5];
